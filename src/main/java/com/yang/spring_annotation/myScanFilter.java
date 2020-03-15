@@ -26,5 +26,4 @@ public class myScanFilter implements TypeFilter {
         ClassMetadata classMetadata= metadataReader.getClassMetadata();
         return true;
     }
-
 }
