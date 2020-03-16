@@ -12,18 +12,19 @@ import java.io.IOException;
 public class myScanFilter implements TypeFilter {
     @Override
     public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
-        /*
+        /**
             获取当前类的注解信息
          */
         AnnotationMetadata annotationMetadata =metadataReader.getAnnotationMetadata();
-        /*
+        /**
             获取当前类的路径
          */
         Resource resource= metadataReader.getResource();
-        /*
+        /**
             获取当前类的信息
          */
         ClassMetadata classMetadata= metadataReader.getClassMetadata();
         return true;
     }
+
 }
