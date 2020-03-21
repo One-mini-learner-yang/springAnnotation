@@ -27,7 +27,7 @@
         @Import({})：直接传入想加入容器的全类名
         @Import({myImportSelector.class})：传入ImportSelector的实现类，类中的selectImport方法返回想加入容器的Bean的全类名数组
         @Import({myImportBeanDefinitionRegistrar.class})：传入ImportBeanDefinitionRegistrar的实现类，通过参数BeanDefinitionRegistry registry将Bean加入容器
-     实现FactoryBean（使用getObject，getObjectType方法，将想制造的类及类的类型传入方法返回值中），并将其放入容器中，从容其中获取该Bean为getObject制造的类
+     实现FactoryBean（使用getObject，getObjectType方法，将想制造的类及类的类型传入方法返回值中），并将其放入容器中，从容器中获取该Bean为getObject制造的类
      Bean的生命周期
         初始化：在容器开启时
         销毁：在容器关闭时
@@ -35,6 +35,9 @@
             1.@Bean( initMethod = "init",destroyMethod = "destroy")
             2.实体类实现InitializingBean, DisposableBean，重写afterPropertiesSet，destroy方法
             3.实体类定义初始化方法和销毁方法，并在方法上使用@PostConstruct和@PreDestroy标签
+    实现BeanPostProcess接口（需要加入容器中）（类似Bean的拦截器）：其中存在方法postProcessBeforeInitialization,postProcessAfterInitialization，自定义容器中所有Bean初始化前后的操作
+    参数注入：使用@Value(),可传定值，SpEL，${}（在配置类使用@PropertySource(value = "")引入配置文件）
+             springBoot提供了@ConfigurationProperties(prefix = "user")来进行整体注入
 2.扩展原理
 3.web
 
