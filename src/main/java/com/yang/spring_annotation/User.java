@@ -1,23 +1,24 @@
 package com.yang.spring_annotation;
 
 import lombok.Data;
-import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-@Scope("prototype")
 @Component
 @Data
 /**
  public class User  implements InitializingBean, DisposableBean {
  **/
-public class User{
+public class User implements ApplicationContextAware, BeanNameAware {
     int id;
 //    @Value("${user.username}")
     String username;
@@ -37,6 +38,24 @@ public class User{
         System.out.println("22222");
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext){
+        System.out.println(applicationContext);
+        getBean(applicationContext.getBean("teacher"));
+    }
+    private void getBean(Object  user){
+        System.out.println("执行了");
+        System.out.println(user);
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        System.out.println(name);
+    }
 
 /**
  @Override

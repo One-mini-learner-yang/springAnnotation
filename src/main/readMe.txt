@@ -38,6 +38,13 @@
     实现BeanPostProcess接口（需要加入容器中）（类似Bean的拦截器）：其中存在方法postProcessBeforeInitialization,postProcessAfterInitialization，自定义容器中所有Bean初始化前后的操作
     参数注入：使用@Value(),可传定值，SpEL，${}（在配置类使用@PropertySource(value = "")引入配置文件）
              springBoot提供了@ConfigurationProperties(prefix = "user")来进行整体注入
+    接口Aware下存在很多接口xxxAware（如ApplicationContextAware，BeanNameAware），让类实现这些接口（重写接口下的方法，会让该类在加载时获得spring底层的一些组件）
+    原理：如ApplicationContextAware的实现是ApplicationContextAwareProcessor在类初始化之前将ioc容器装进类中
+    自动装配：@Autowired自动装配对应类型，若有多个相同类型，默认装配类型小写的
+             在多个相同类型环境下，使用 @Autowired @Qualifier(bean名称)进行指定的装配
+             在多个相同类型环境下，@Primary指定某个类优先装配，在没有指定装配时，装配该类
+    环境切换：@Profile，将在此注解下的Bean在对应环境下加载进容器中
+    在spring的配置文件处spring.profiles.active=test来定义当前环境
 2.扩展原理
 3.web
 
