@@ -45,6 +45,47 @@
              在多个相同类型环境下，@Primary指定某个类优先装配，在没有指定装配时，装配该类
     环境切换：@Profile，将在此注解下的Bean在对应环境下加载进容器中
     在spring的配置文件处spring.profiles.active=test来定义当前环境
+    AOP:（注:在springBoot中，引入相应整合包：spring-boot-starter-aop(还需加上aspectjweaver依赖，否则@Aspect注解不能用)，在配置文件中配置spring.aop.auto=true(默认为true)，无需像spring中进行@EnableAspectJAutoProxy
+的配置）
+    AOP的切点表达式：
+        execute（）：表示满足某一匹配模式的所有目标类方法连接点。如execution(* greetTo(..))表示所有目标类中的greetTo()方法。
+        @annotation（）：表示标注了特定注解的目标方法连接点。如@annotation(com.baobaotao.anno.NeedTest)表示任何标注了@NeedTest注解的目标类方法。
+        within（）：表示特定域下的所有连接点。如within(com.baobaotao.service.*)表示com.baobaotao.service包中的所有连接点，也即包中所有类的所有方法，而within(com.baobaotao.service.*Service)表示在com.baobaotao.service包中，所有以Service结尾的类的所有连接点。
+        @within()：假如目标类按类型匹配于某个类A，且类A标注了特定注解，则目标类的所有连接点匹配这个切点。如@within(com.baobaotao.Monitorable)定义的切点，假如Waiter类标注了@Monitorable注解，则Waiter以及Waiter实现类NaiveWaiter类的所有连接点都匹配。
+    AOP的JoinPoint类：JoinPoint对象封装了SpringAop中切面方法的信息,在切面方法中添加JoinPoint参数,就可以获取到封装了该方法信息的JoinPoint对象.
+    JoinPoint的方法：
+        1.geSignature()：获取目标方法的信息
+            如：joinPoint.getSignature().getName()：获取目标方法的名
+                joinPoint.getSignature().getDeclaringType().getSimpleName()：目标方法所属类的简单类名
+                joinPoint.getSignature().getDeclaringTypeName()：目标方法所属类的全类名
+                joinPoint.getSignature().getModifiers()：目标方法的声明类型（如：public）
+        2.getArgs()：获取目标方法的参数对象
+        3.getTarget()：获取被代理对象
+        4.getThis()：获取AOP代理对象
+    AOP的@After，@Before，@AfterThrowing，@AfterReturning，在方法参数使用JoinPoint即可
+    而环绕通知@Around需要使用ProceedingJoinPoint。
+    ProceedingJoinPoint是继承于JoinPoint的接口，补充了proceed方法
+    ----------------------------------------------------------
+    import org.aspectj.lang.reflect.SourceLocation;
+    public interface JoinPoint {
+       String toString();         //连接点所在位置的相关信息
+       String toShortString();     //连接点所在位置的简短相关信息
+       String toLongString();     //连接点所在位置的全部相关信息
+       Object getThis();         //返回AOP代理对象
+       Object getTarget();       //返回目标对象
+       Object[] getArgs();       //返回被通知方法参数列表
+       Signature getSignature();  //返回当前连接点签名
+       SourceLocation getSourceLocation();//返回连接点方法所在类文件中的位置
+       String getKind();        //连接点类型
+       StaticPart getStaticPart(); //返回连接点静态部分
+      }
+
+     public interface ProceedingJoinPoint extends JoinPoint {
+           public Object proceed() throws Throwable;
+           public Object proceed(Object[] args) throws Throwable;
+     }
+     -----------------------------------------------------------
+     通过proceed方法让目标方法执行（可用新的一组参数来替换原有参数进行执行）
 2.扩展原理
 3.web
 

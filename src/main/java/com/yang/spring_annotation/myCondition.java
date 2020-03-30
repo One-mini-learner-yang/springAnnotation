@@ -2,6 +2,7 @@ package com.yang.spring_annotation;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 public class myCondition  implements Condition{
