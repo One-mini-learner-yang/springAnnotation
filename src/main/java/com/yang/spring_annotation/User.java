@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ import javax.annotation.PreDestroy;
 /**
  public class User  implements InitializingBean, DisposableBean {
  **/
-public class User implements ApplicationContextAware, BeanNameAware {
+public class User extends ApplicationEvent implements ApplicationContextAware, BeanNameAware {
     int id;
 //    @Value("${user.username}")
     String username;

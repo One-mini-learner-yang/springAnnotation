@@ -87,5 +87,16 @@
      -----------------------------------------------------------
      通过proceed方法让目标方法执行（可用新的一组参数来替换原有参数进行执行）
 2.扩展原理
-3.web
-
+    BeanFactoryPostProcessor：在bean对象初始信息加载完成但未实例化时执行
+    BeanDefinitionRegistryPostProcessor：在bean对象初始化信息加载之前执行
+    注；BeanDefinitionRegistryPostProcessor为BeanFactoryPostProcessor的子接口，且BeanDefinitionRegistryPostProcessor执行在BeanFactoryPostProcessor前
+    事件的监听
+        1.继承ApplicationListener<想要监听的类>
+            class myListener implements ApplicationListener<User>{
+                        @Override
+                        public void onApplicationEvent(User event) {
+                            }
+        2。使用@EventListener注解(在对应的监听方法上使用该注解，参数是想要监听的类)
+               @EventListener(classes = {User.class})
+                 public void method(User userEvent){
+                 }
